@@ -1,0 +1,61 @@
+.footer {
+  background: var(--color-black);
+  color: var(--color-beige-dark);
+  padding: clamp(2.5rem, 5vw, 3.5rem) var(--container-pad);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+}
+
+.links {
+  display: flex;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.links a {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s var(--ease);
+}
+
+.links a:hover {
+  color: var(--color-gold-soft);
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(228, 220, 200, 0.14);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  opacity: 0.75;
+}
+
+.toTop {
+  opacity: 0.75;
+  transition: opacity 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.toTop:hover {
+  opacity: 1;
+  color: var(--color-gold-soft);
+}

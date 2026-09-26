@@ -1,0 +1,142 @@
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--color-ivory);
+  /* Shrinks the centring box so the lockup rides up into the footage's bright
+     haze band (roughly 30-52% of frame height) instead of straddling the
+     horizon, where the tone falls away to shadow mid-word. */
+  padding-bottom: 26vh;
+}
+
+.imageWrap {
+  position: absolute;
+  inset: 0;
+}
+
+/* The clip is 16:9 and this box is the viewport, so `cover` is doing real
+   cropping at most window shapes — the sides go on a tall window, the top and
+   bottom on a wide one. The subject sits central and the haze band is broad, so
+   neither crop takes anything the lockup depends on.
+
+   The grade is the same one the still carried: the footage is already warm, so
+   sepia only seats it on the parchment palette. Tone is left alone, because the
+   bright haze is exactly what gives the dark wordmark its contrast. */
+.imageWrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(26%) saturate(1.15) contrast(0.99);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  /* Deliberately clear through the middle: the bright haze is what the dark
+     wordmark reads against, so shading it would undo the contrast. That holds
+     for the whole clip, not just its first frame — the band stays bright end to
+     end, dimming only about 38 levels as the camera descends. This only
+     seats the white header type at the top and the scroll cue at the bottom,
+     as insurance for wide viewports that crop the frame vertically. */
+  background: linear-gradient(
+    180deg,
+    rgba(26, 22, 19, 0.3) 0%,
+    rgba(26, 22, 19, 0) 20%,
+    rgba(26, 22, 19, 0) 70%,
+    rgba(26, 22, 19, 0.32) 100%
+  );
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  /* Holds the wordmark image — no type of its own. */
+  margin: 0;
+  line-height: 0;
+}
+
+/* The wipe clips to this box, so it is padded out far enough to contain the
+   logo's halo — clipping tight to the image would shear the glow off at the
+   final frame. The matching negative margin keeps the lockup's position, and
+   therefore its measured place in the photograph's bright band, unchanged. */
+.logoWipe {
+  display: block;
+  padding: 1.5rem;
+  margin: -1.5rem;
+}
+
+.logo {
+  width: clamp(17rem, 46vw, 40rem);
+  height: auto;
+  /* A pale halo, not a shadow — the print is dark and the haze behind it is
+     light, so it needs separating the other way round. */
+  filter: drop-shadow(0 1px 16px rgba(250, 247, 240, 0.6));
+}
+
+.sub {
+  font-size: clamp(0.75rem, 1vw, 0.9375rem);
+  /* Wider tracking now that it sits under the wordmark rather than above it. */
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-indent: 0.26em; /* Offsets the trailing letter-space so it stays centred. */
+  /* Fits on one line from about 360px up. Below that it has to wrap, and this
+     breaks it after the ampersand rather than orphaning the last word. No effect
+     at any width where it already fits. */
+  text-wrap: balance;
+  text-shadow: 0 1px 10px rgba(250, 247, 240, 0.75);
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-beige);
+}
+
+.scrollCue span {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--color-gold-soft), transparent);
+}
+
+/* The opening wipe and the tagline's entrance are driven by Framer, which writes
+   inline styles — so overriding them needs `!important`. Doing it here rather
+   than in the component keeps the server and client markup identical (a media
+   query resolves the same in both) and shows the finished lockup on the very
+   first paint, with no animation and no blank beat. */
+@media (prefers-reduced-motion: reduce) {
+  .logoWipe {
+    clip-path: none !important;
+  }
+  .sub {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

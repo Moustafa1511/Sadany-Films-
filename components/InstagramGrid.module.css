@@ -1,0 +1,60 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.followLink {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 0.25rem;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.followLink:hover {
+  color: var(--color-gold);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.tile img {
+  object-fit: cover;
+}
+
+.tileIcon {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-ivory);
+  background: rgba(20, 17, 14, 0.35);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  font-size: 1.4rem;
+}
+
+.tile:hover .tileIcon {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

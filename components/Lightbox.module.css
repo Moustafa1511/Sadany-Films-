@@ -1,0 +1,94 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(20, 17, 14, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage {
+  position: relative;
+  width: min(88vw, 1100px);
+  height: min(82vh, 900px);
+}
+
+.stage img {
+  object-fit: contain;
+}
+
+/* A film gets a box shaped like the footage rather than the 1100x900 the stills
+   use. `min()` across both axes picks whichever constraint binds, so the square
+   always fits and is never letterboxed inside a wider box — which matters here
+   more than it does for a still, because the native controls bar is drawn across
+   the whole element and would otherwise hang off both sides of the picture. The
+   caption lines up with the film's left edge for the same reason.
+
+   This hardcodes square, which is what every clip in lib/photos.ts is. Footage of
+   another shape would need the ratio brought in from `width`/`height` instead. */
+.stageFilm {
+  width: min(88vw, 82vh, 900px);
+  height: min(88vw, 82vh, 900px);
+}
+
+.stage video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* No-op while the box matches the footage; insurance if either changes. */
+  object-fit: contain;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  bottom: -2.5rem;
+  color: var(--color-beige);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.close {
+  position: absolute;
+  top: 1.75rem;
+  right: clamp(1.5rem, 4vw, 3rem);
+  color: var(--color-ivory);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-ivory);
+  font-size: 1.75rem;
+  padding: 1rem;
+  opacity: 0.75;
+  transition: opacity 0.3s var(--ease);
+}
+
+.arrow:hover {
+  opacity: 1;
+  color: var(--color-gold-soft);
+}
+
+.prev {
+  left: clamp(0.5rem, 3vw, 2rem);
+}
+
+.next {
+  right: clamp(0.5rem, 3vw, 2rem);
+}
+
+@media (max-width: 700px) {
+  .arrow {
+    font-size: 1.25rem;
+  }
+}

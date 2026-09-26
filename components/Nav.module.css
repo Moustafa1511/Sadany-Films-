@@ -1,0 +1,144 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 var(--container-pad);
+  color: var(--color-ivory);
+  transition: background-color 0.5s var(--ease), color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.solid {
+  background: rgba(236, 228, 211, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 var(--color-rule);
+  color: var(--color-ink);
+}
+
+.wordmark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logoImg {
+  height: 2.4rem;
+  width: auto;
+  transition: opacity 0.5s var(--ease);
+}
+
+.logoDark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.solid .logoLight {
+  opacity: 0;
+}
+
+.solid .logoDark {
+  opacity: 1;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+
+/* Leaves the site, so it reads as a button rather than another section link. */
+.instagram {
+  padding: 0.6rem 1.25rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.instagram::after {
+  display: none;
+}
+
+.instagram:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-parchment-soft);
+}
+
+.links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  position: relative;
+  padding-bottom: 0.35rem;
+}
+
+.links a.instagram {
+  padding-bottom: 0.6rem;
+}
+
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--color-gold-soft);
+  transition: width 0.4s var(--ease);
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+.menuButton {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+}
+
+.menuButton span {
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--color-parchment);
+  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.overlay a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 780px) {
+  .links {
+    display: none;
+  }
+  .menuButton {
+    display: flex;
+  }
+}

@@ -1,0 +1,204 @@
+.wrap {
+  background: var(--color-parchment-soft);
+}
+
+.intro {
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 0.42fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+/* ---- numbered film selector ---- */
+
+.selector ul {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-rule);
+}
+
+.chapter {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "num title"
+    "num date";
+  column-gap: 1rem;
+  row-gap: 0.15rem;
+  text-align: left;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink-faint);
+  transition: color 0.4s var(--ease), padding-left 0.4s var(--ease);
+}
+
+.chapter:hover {
+  color: var(--color-ink-soft);
+  padding-left: 0.4rem;
+}
+
+.chapterActive,
+.chapterActive:hover {
+  color: var(--color-ink);
+  padding-left: 0.4rem;
+}
+
+.chapterNum {
+  grid-area: num;
+  align-self: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--color-gold);
+  opacity: 0.55;
+  transition: opacity 0.4s var(--ease);
+}
+
+.chapterActive .chapterNum {
+  opacity: 1;
+}
+
+.chapterTitle {
+  grid-area: title;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.15;
+  color: currentColor;
+}
+
+.chapterDate {
+  grid-area: date;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Countdown to the next chapter, drawn along the active row's bottom rule.
+   Absolutely positioned on purpose: it comes and goes as rotation pauses and
+   resumes, and it must never add or remove height from the list while doing so. */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--color-gold);
+  transform-origin: left center;
+}
+
+/* ---- film stage ---- */
+
+.stageCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Square, because the films are. This was 16/9, which against 1080x1080 footage
+   meant `cover` throwing away 44% of the frame off the top and bottom — enough to
+   cut the heads off the couple in two of the three clips. Nothing about a 16/9
+   box was load-bearing, and the footage is not going to change shape, so the box
+   gave way instead of the picture.
+
+   The height cap is what stops that being a problem: unconstrained, a square in
+   this column would be 862px at desktop size and the film and its caption could
+   never be on screen together. 66vh puts it at about 594px, which leaves room for
+   both. Width rather than height is capped because `aspect-ratio` only derives the
+   dimension that isn't already set. */
+.stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: min(100%, 66vh);
+  background: var(--color-parchment-deep);
+}
+
+.stageInner {
+  position: absolute;
+  inset: 0;
+}
+
+.video,
+.still {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The shared .photoFrame grade targets img only, so a clip has to carry its own —
+   but not that grade. grayscale(88%) was there to pull random placeholder stock
+   into one palette; these are Abdallah's films, already graded, and showing them
+   almost colourless in the section built to sell them would be working against
+   the footage. This is the hero's grade, warm and light, so the films sit on the
+   parchment without being rewritten by it. */
+.video {
+  filter: sepia(26%) saturate(1.15) contrast(0.99);
+}
+
+.sound {
+  position: absolute;
+  z-index: 3;
+  bottom: 1rem;
+  right: 1.15rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-parchment-soft);
+  border: 1px solid rgba(250, 247, 240, 0.45);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.sound:hover {
+  background: rgba(250, 247, 240, 0.16);
+  border-color: var(--color-parchment-soft);
+}
+
+.caption .meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.85rem;
+}
+
+.caption h3 {
+  font-size: clamp(1.8rem, 3.4vw, 2.75rem);
+  margin-bottom: 0.85rem;
+}
+
+.caption p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 52ch;
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  /* Full width once the layout is a single column. The height cap is dropped
+     rather than kept: on a phone 66vh is wider than the screen anyway, and on the
+     rare short landscape window capping it would leave the square stranded against
+     the left edge of a much wider column. */
+  .stage {
+    width: 100%;
+  }
+  .selector {
+    order: 2;
+  }
+  .stageCol {
+    order: 1;
+  }
+}

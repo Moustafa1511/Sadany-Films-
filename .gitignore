@@ -1,0 +1,31 @@
+# dependencies
+node_modules
+
+# build output
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets — .env.local holds RESEND_API_KEY
+.env*.local
+*.pem
+
+# deploy
+.vercel
+
+# os / editor
+.DS_Store
+*.log
+
+# Camera masters, ~196 MB. Deliberately not in git: two of them (11.mov 71 MB,
+# 29.mov 62 MB) trip GitHub's 50 MB per-file warning, git stores video with no
+# delta compression, and every clone would pull the lot forever. The eleven clips
+# the site actually serves ARE committed, under public/videos/, so a fresh clone
+# still builds and deploys.
+#
+# These files exist nowhere else. Back them up separately — see footage/README.md.
+footage/
+
+# Claude Code machine-local permissions (not shared)
+.claude/settings.local.json
